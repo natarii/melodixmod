@@ -25,6 +25,14 @@ I ended up getting one as a spare part for an Ensoniq keyboard which happened to
 
 Before deciding to proceed with an internal card mod, I ended up purchasing an SRAM card and designing an Arduino Mega-based programmer for it. The programmer can connect to the Mega board with no extra components needed, and the code allows for card memory to be uploaded and downloaded via XMODEM. I also performed the required mods to the Melodix PCB to allow SRAM cards to be used.
 
-## TODO
+## Related WIP projects / TODO
 
-The rest of this readme!
+  * Mod PCB (nearly complete, needs some corrections for mistakes found during installation)
+  * Disassembly of ML-304/ML-301 MCU program (nearly complete, needs some updates now that I have the hardware to reference)
+  * MAME driver for Melodix series (working, needs better integration with MAME cartridge system, needs UI)
+  * Melodix card to VGM conversion utility (working, some minor inaccuracies)
+  * MIDI to Melodix card conversion utility (not started)
+  * Replacement main MCU (not started)
+  * Hardware overview video (not started)
+  * Open source ML-301 clone (not started)
+  * The rest of this readme!

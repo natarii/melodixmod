@@ -36,7 +36,7 @@ It is also possible to adapt these cards to be used in a standard EPROM programm
 
 ## Related WIP projects / TODO
 
-  * Mod PCB (nearly complete, needs some corrections for mistakes found during installation)
+  * Verify v1.1 mod PCB
   * Disassembly of ML-304/ML-301 MCU program (nearly complete, needs some updates now that I have the hardware to reference)
   * MAME driver for Melodix series (working, needs better integration with MAME cartridge system, needs UI)
   * Melodix card to VGM conversion utility (working, some minor inaccuracies)

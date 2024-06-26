@@ -1,0 +1,52 @@
+Card header
+  Offset Type       Data
+  $0000  uint8      Card presence detect / options
+  $0001  uint8      Unknown
+  $0002  uint16be   Post-playback delay in ticks
+  $0004  uint16be   Patch 1 address *
+  $0006  uint16be   Patch 2 address *
+  $0008  uint16be   Patch 3 address *
+  $000a  uint16be   Track 1 start address *
+  $000c  uint16be   Track 2 start address *
+  $000e  uint16be   Track 3 start address *
+  $0010  uint8      Tick rate (OPN Timer B value)
+  * Set to 0 if unused.
+
+OPN four-op data
+  Used in patch upload.
+  Offset Type       Data
+  $0000  uint8      Data for op1
+  $0001  uint8      Data for op3
+  $0002  uint8      Data for op2
+  $0003  uint8      Data for op4
+
+OPN patch
+  Offset Type        Data
+  $0000  fourop_data DT/MULTI
+  $0004  fourop_data TL *
+  $0008  fourop_data KS/AR
+  $000c  fourop_data DR
+  $0010  fourop_data SR
+  $0014  fourop_data SL/RR
+  $0018  uint8       FB/CONNECT
+  * Please be aware of original firmware TL handling bug.
+
+Note data
+  Used in each entry in a track.
+  HIGH nibble: Base BLOCK
+  LOW nibble:  Offset into scale LUT divided by 2
+
+Track data
+  End-of-track marker sets all fields to 0xFE
+  Offset Type       Data
+  $0000  note       Note data
+  $0001  uint8      Delay until next note in ticks
+  $0002  uint8      KON length in ticks *
+  $0003  uint8      TL addend
+  * If 0, note is not played.
+
+Card presence detect / options
+  A typical value is 0x7f.
+  Bit 7 = Card detect. Must be 0
+  Bit 1 = Enables start delay and remote relay. Set to 1 on most cards, except special cards like MC-S01, etc.
+  All other bits are unknown or unused.

@@ -1,0 +1,1 @@
+**Note:** `mcu.asm` is a generated file. Labels, comments, etc are configured in `mcu_info.txt` and then the `f9dasm` program is used to generate the disassembly from the info file and MCU ROM dump. You can generate the disassembly using the following command: `f9dasm -out mcu.asm -info mcu_info.txt`

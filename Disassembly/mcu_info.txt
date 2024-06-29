@@ -1,0 +1,200 @@
+*f9dasm base config
+option 6301
+file mcu.bin f000
+
+*regions
+data f000-f015 *scale lut
+hex f000-f015
+unused fbfb-fcff
+data fd00-fea5 *ml301 tunes
+
+*labels
+*vars
+label 0080 track1_loc_word
+label 0082 track2_loc_word
+label 0084 track3_loc_word
+label 0086 opn_ch
+label 0087 track1_is_finished
+label 0088 track2_is_finished
+label 0089 track3_is_finished
+label 008a opn_timer_b
+label 008c track1_note_len
+label 008d track2_note_len
+label 008e track3_note_len
+label 008f track1_kon_len
+label 0090 track2_kon_len
+label 0091 track3_kon_len
+label 0092 patch_upload_tmp
+label 0093 fb_algo_base
+label 0096 tl_op1_base
+label 0099 tl_op2_base
+label 009c tl_op3_base
+label 009f tl_op4_base
+label 00a2 tl_op1
+label 00a3 tl_op2
+label 00a4 tl_op3
+label 00a5 tl_op4
+label 00a6 cur_note_freq
+label 00a7 unused1
+label 00a8 opn_tl_modifier
+label 00a9 card_pointer
+label 00ab opn_io_a_val
+label 00ac active_card_slot
+label 00ad tune_end_delay
+label 00ae tune_end_delay_lo
+label 00b1 patch_loc_word
+label 00b3 int_flag
+label 00b4 already_playing
+label 00b5 currently_playing_bitfield
+label 00b6 pressed_switch_bitfield
+label 00b7 port1_isr_tmp
+label 00b8 nothing_pressed_in_isr
+label 00b9 tune_found_ff_flag
+label 00ba unk_M00BA
+label 00bc unk_M00BC
+label 00be unk_M00BE
+label 0100 opn_reg
+label 0101 card_d_data
+label 0102 card_c_data
+label 0103 card_b_data
+label 0104 card_a_data
+label 0105 card_addr
+label 0140 opn_data_ml304
+*code
+label f000 scale_lut
+label f05a mainloop
+label f0b4 sel_card_at_104
+label f0cf sel_card_at_103
+label f0ed sel_card_at_102
+label f10b sel_card_at_101
+label f129 sel2_card_at_104
+label f147 sel2_card_at_103
+label f165 sel2_card_at_102
+label f183 sel2_card_at_101
+label f460 stop_track
+label f490 opn_write
+label f4af opn_read
+label f4cb read_tune_data
+label f6d2 load_ch_patch
+label f565 opn_write_4op_tl
+label f5c8 opn_keyon
+label f5d2 opn_keyoff
+label f5dc opn_write_freq
+label f604 opn_timerb_setup
+label f648 ml304_setup_next_note_trk1
+label f68f ml304_setup_next_note_trk2
+label f6d6 ml304_setup_next_note_trk3
+label f71d add_opn_ch_x
+label f72a spin_delay_100ms
+label f7c0 isr_swi3_exit
+label f7c9 isr_swi3_nothing_pressed
+label f830 ml301_mode
+label fb2e ml301_setup_next_note_trk1
+label fb5d ml301_setup_next_note_trk1
+label fb8c ml301_setup_next_note_trk1
+label fbbb ml301_swi_isr
+label fd00 ml301_builtin_tunes
+
+*comments
+*vars
+lcomment 000b-0014 not used
+lcomment 0096-009f note: stored in order 1234 here!!!
+lcomment 00a2-00a5 note: stored in order 1234 here!!!
+lcomment 00b0 high byte of patch 1 loc???
+lcomment 00b6 really just a backup of PORT1
+lcomment 00b9 can use FF instead of FE to terminate tune?
+lcomment 00ba some temp var, holds a backup of X, -> 00BB
+lcomment 00bc temp, stored offset into builtin tune or something like that
+lcomment 00be temp, some offset on ml301
+lcomment 0105 16 bit wide, big endian, latched on hardware
+lcomment 0140 MCU A6 -> OPN A0 on hardware??? or something more complicated?
+*code
+lcomment f018 ml-304 bit
+lcomment f034 prescaler
+lcomment f03b ssg enable
+lcomment f03e probably all off 1111
+lcomment f042 io a
+lcomment f063 redundant, it is written before reading in swi isr
+lcomment f1a1 card presence detect
+lcomment f1be enable TOI
+lcomment f1bb io a
+lcomment f1c3 mux select
+lcomment f1cb mux select
+lcomment f1ce card header
+lcomment f1d3 relay off
+lcomment f1d6 jmp skip start delay
+lcomment f1d9 relay on
+lcomment f1dc io b
+lcomment f1de read start delay bits
+lcomment f23c track 1 loc
+lcomment f258 patch 1 loc
+lcomment f271 track 2 loc
+lcomment f28a patch 2 loc
+lcomment f2a3 track 3 loc
+lcomment f2bc patch 3 loc
+lcomment f2d5 timer B val
+lcomment f2e7 write timer A/B control and 3ch mode
+lcomment f378 clear timer b flag, stop timer b
+lcomment f3d6 probably all off 1111
+lcomment f3da io a
+lcomment f3dd disable TOI
+lcomment f3fa write timer A/B control and 3ch mode
+lcomment f40c probably all off 1111
+lcomment f410 io a
+lcomment f413 disable TOI
+lcomment f41d big tree to check if trying to play same card already playing?
+lcomment f477 write timer A/B control and 3ch mode
+lcomment f47a probably all off 1111
+lcomment f47e io a
+lcomment f481 disable TOI
+lcomment f4a3 bra if ml301
+lcomment f4c1 bra if ml301
+lcomment f4e1 drt/mul
+lcomment f4fc write algo+fb
+lcomment f504 first tl in patch (patch loc + 4)
+lcomment f52c fb/algo (patch loc + 0x18)
+lcomment f56d all of these CMPAs are to write TL only for slot operators
+lcomment f5ac BUG!!! should be $44
+lcomment f5df shl a <- b
+lcomment f5eb x+=b
+lcomment f5f1 a+=b
+lcomment f5f6 freq hi
+lcomment f600 freq lo
+lcomment f608 a = ff - timerb
+lcomment f60b a /= 8
+lcomment f610 a = io port b
+lcomment f613 a >>= 1
+lcomment f614 a &= 0xf
+lcomment f618 bra rts
+lcomment f61e bra use normal value
+lcomment f62f bra write A
+lcomment f63e bra write A
+lcomment f640 use normal value
+lcomment f642 write A
+lcomment f644 tiemr b
+lcomment f73e clear timer b flag
+lcomment f744 bra if ml301
+lcomment f77e bra if ml304
+lcomment f78b bra if nothing pressed
+lcomment f7c0-f7c2 clear TOF
+lcomment f827 all bra here if selected card is already playing?
+lcomment f846 prescaler
+lcomment f84d ssg enable
+lcomment f854 io a
+lcomment f8b4 io a
+lcomment f8c1 enable TOI
+lcomment f941 io a
+lcomment f947 io b
+lcomment f977 2 sec delay
+lcomment f982 4 sec delay
+lcomment f9ef timer ab ctl 3ch mode
+lcomment fa13 io a
+lcomment fa16 disable TOI
+lcomment fa47 timer ab ctl 3ch mode
+lcomment fa57 io a
+lcomment fa5a disable TOI
+lcomment fa84 dt/mul
+lcomment fa9b fb/conn
+lcomment faf5 reading tempo here for ml301
+lcomment fb2a timer b
+lcomment fbcc-fbce clear TOF

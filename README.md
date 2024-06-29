@@ -16,6 +16,9 @@ ML-304 devices use a Yamaha YM2203 OPN FM sound source to play back melodies, ch
 - `FujisokuBProgrammer` Arduino Mega-based programmer for Melodix cards
 - `MelodixCard` - Information about the data format on Melodix cards
 
+![](<Pictures/modv1-installed.jpg>)
+![](<Pictures/modv1-detail.jpg>)
+
 ## MELODIX CARD information
 
 The memory cards used in the ML-304 are pre-programmed and follow the Fujisoku B-series physical and electrical standard. Despite a very vague resemblance to PCMCIA and other common memory cards, this is an obsolete and relatively rare format. As the Melodix units are niche in addition to not having been marketed outside of Japan, original TOA cards fetch prices in the hundreds of USD range on auction sites, making it infeasible for most (certainly me!) to collect any more than the less-desirable cards.

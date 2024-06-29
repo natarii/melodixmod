@@ -5,6 +5,17 @@ The MelodixMod project adds internal memory to the TOA MELODIX ML-304 melody gen
 ## Overview
 ML-304 devices use a Yamaha YM2203 OPN FM sound source to play back melodies, chimes and tones stored on memory cards. The MelodixMod system serves as an effective replacement for these cards. Full function of the original unit is retained -- physical cards inserted into the slots will override any data stored on MelodixMod's flash. A bank switching option is available through a hole on the rear panel which allows the user to switch between multiple banks of simulated cards. Impact to the device's appearance is also minimized, with the only change visible from the outside being the removal of a grounding screw.
 
+### Mod Files
+- `Logic` - Data to program the mod's decode logic chip
+- `MCU` - Program for the mod's ATTiny85 MCU
+- `PCB` - EAGLE schematic and PCB design files
+- `PCBSpacer` - OpenSCAD design file and STL for a 3D-printable spacer to support the mod PCB
+
+### Research Files
+- `Disassembly` - Original ML-304 program disassembly
+- `FujisokuBProgrammer` Arduino Mega-based programmer for Melodix cards
+- `MelodixCard` - Information about the data format on Melodix cards
+
 ## MELODIX CARD information
 
 The memory cards used in the ML-304 are pre-programmed and follow the Fujisoku B-series physical and electrical standard. Despite a very vague resemblance to PCMCIA and other common memory cards, this is an obsolete and relatively rare format. As the Melodix units are niche in addition to not having been marketed outside of Japan, original TOA cards fetch prices in the hundreds of USD range on auction sites, making it infeasible for most (certainly me!) to collect any more than the less-desirable cards.

@@ -6,7 +6,15 @@ file mcu.bin f000
 data f000-f015 *scale lut
 hex f000-f015
 unused fbfb-fcff
-data fd00-fea5 *ml301 tunes
+word fd00-fd03 *ml301 tune addrs
+data fd04-fd35 *ml301 tune patches
+word fd36-fd3b *ml301 4-note chime patch addrs
+word fd3c-fd41 *ml301 4-note chime track addrs
+data fd42-fd75 *ml301 4-note chime track data
+word fd76-fd7b *ml301 westminster patch addrs
+word fd7c-fd81 *ml301 westminster track addrs
+data fd82-fea5 *ml301 westminster track data
+unused fea6-ffef
 
 *labels
 *vars
@@ -51,7 +59,7 @@ label 00b7 port1_isr_tmp
 label 00b8 nothing_pressed_in_isr
 label 00b9 tune_found_ff_flag
 label 00ba unk_M00BA
-label 00bc unk_M00BC
+label 00bc ml301_tune_rd_addr
 label 00be unk_M00BE
 label 0100 opn_reg
 label 0101 card_d_data
@@ -89,11 +97,24 @@ label f72a spin_delay_100ms
 label f7c0 isr_swi3_exit
 label f7c9 isr_swi3_nothing_pressed
 label f830 ml301_mode
+label f869 ml301_clear
+label f8bc ml301_setup_tune
 label fb2e ml301_setup_next_note_trk1
-label fb5d ml301_setup_next_note_trk1
-label fb8c ml301_setup_next_note_trk1
+label fb5d ml301_setup_next_note_trk2
+label fb8c ml301_setup_next_note_trk3
 label fbbb ml301_swi_isr
-label fd00 ml301_builtin_tunes
+label fd00 ml301_4notechime_addr
+label fd02 ml301_westminster_addr
+label fd04 ml301_4notechime_patch
+label fd1d ml301_westminster_patch
+label fd36 ml301_4notechime_data
+label fd4a ml301_4notechime_trk1
+label fd5a ml301_4notechime_trk2
+label fd66 ml301_4notechime_trk3
+label fd76 ml301_westminster_data
+label fd8a ml301_westminster_trk1
+label fde6 ml301_westminster_trk2
+label fe46 ml301_westminster_trk3
 
 *comments
 *vars
@@ -198,3 +219,5 @@ lcomment fa9b fb/conn
 lcomment faf5 reading tempo here for ml301
 lcomment fb2a timer b
 lcomment fbcc-fbce clear TOF
+lcomment fd04 same patch for all three tracks
+lcomment fd1d same patch for all three tracks

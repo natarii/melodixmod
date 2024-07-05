@@ -128,7 +128,7 @@ lcomment 00ba some temp var, holds a backup of X, -> 00BB
 lcomment 00be temp, some offset on ml301
 lcomment 0101 actually opn data on ml301 (different memory map)
 lcomment 0105 16 bit wide, big endian, latched on hardware
-lcomment 0140 MCU A6 -> OPN A0 on hardware??? or something more complicated?
+lcomment 0140 MCU A6 -> OPN A0 on hardware
 *code
 lcomment f018 ml-304 bit
 lcomment f034 prescaler

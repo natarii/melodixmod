@@ -78,7 +78,7 @@ card_c_data EQU     $0102
 card_b_data EQU     $0103
 card_a_data EQU     $0104
 card_addr EQU     $0105                    ; 16 bit wide, big endian, latched on hardware
-opn_data EQU     $0140                    ; MCU A6 -> OPN A0 on hardware??? or something more complicated?
+opn_data EQU     $0140                    ; MCU A6 -> OPN A0 on hardware
 
 ;****************************************************
 ;* Program Code / Data Areas                        *

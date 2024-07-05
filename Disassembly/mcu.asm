@@ -66,19 +66,19 @@ port1_isr_tmp EQU     $00B7
 nothing_pressed_in_isr EQU     $00B8
 tune_found_ff_flag EQU     $00B9                    ; can use FF instead of FE to terminate tune?
 unk_M00BA EQU     $00BA                    ; some temp var, holds a backup of X, -> 00BB
-ml301_tune_rd_addr EQU     $00BC                    ; temp, stored offset into builtin tune or something like that
+ml301_tune_rd_addr EQU     $00BC
 unk_M00BE EQU     $00BE                    ; temp, some offset on ml301
 M00BF   EQU     $00BF
 M00C0   EQU     $00C0
 M00C1   EQU     $00C1
 M00FF   EQU     $00FF
 opn_reg EQU     $0100
-card_d_data EQU     $0101
+ml304_card_d_data_ml301_opn_data EQU     $0101                    ; actually opn data on ml301 (different memory map)
 card_c_data EQU     $0102
 card_b_data EQU     $0103
 card_a_data EQU     $0104
 card_addr EQU     $0105                    ; 16 bit wide, big endian, latched on hardware
-opn_data_ml304 EQU     $0140                    ; MCU A6 -> OPN A0 on hardware??? or something more complicated?
+opn_data EQU     $0140                    ; MCU A6 -> OPN A0 on hardware??? or something more complicated?
 
 ;****************************************************
 ;* Program Code / Data Areas                        *
@@ -194,7 +194,7 @@ ZF100   JSR     spin_delay_100ms         ;F100: BD F7 2A       '..*'
         TIM     #$08,M0002               ;F103: 7B 08 02       '{..'
         BEQ     sel_card_at_101          ;F106: 27 03          ''.'
         JMP     mainloop                 ;F108: 7E F0 5A       '~.Z'
-sel_card_at_101 LDX     #card_d_data             ;F10B: CE 01 01       '...'
+sel_card_at_101 LDX     #ml304_card_d_data_ml301_opn_data ;F10B: CE 01 01       '...'
         STX     card_pointer             ;F10E: DF A9          '..'
         LDAA    #$0E                     ;F110: 86 0E          '..'
         STAA    opn_io_a_val             ;F112: 97 AB          '..'
@@ -242,7 +242,7 @@ ZF178   JSR     spin_delay_100ms         ;F178: BD F7 2A       '..*'
         TIM     #$10,M0002               ;F17B: 7B 10 02       '{..'
         BEQ     sel2_card_at_101         ;F17E: 27 03          ''.'
         JMP     mainloop                 ;F180: 7E F0 5A       '~.Z'
-sel2_card_at_101 LDX     #card_d_data             ;F183: CE 01 01       '...'
+sel2_card_at_101 LDX     #ml304_card_d_data_ml301_opn_data ;F183: CE 01 01       '...'
         STX     card_pointer             ;F186: DF A9          '..'
         LDAA    #$0E                     ;F188: 86 0E          '..'
         STAA    opn_io_a_val             ;F18A: 97 AB          '..'
@@ -582,10 +582,10 @@ ZF49B   BITA    opn_reg                  ;F49B: B5 01 00       '...'
         TIM     #$80,M0007               ;F4A0: 7B 80 07       '{..'
         BEQ     ZF4AA                    ;F4A3: 27 05          ''.'    bra if ml301
         PULA                             ;F4A5: 32             '2'
-        STAA    opn_data_ml304           ;F4A6: B7 01 40       '..@'
+        STAA    opn_data                 ;F4A6: B7 01 40       '..@'
         RTS                              ;F4A9: 39             '9'
 ZF4AA   PULA                             ;F4AA: 32             '2'
-        STAA    card_d_data              ;F4AB: B7 01 01       '...'
+        STAA    ml304_card_d_data_ml301_opn_data ;F4AB: B7 01 01       '...'
         RTS                              ;F4AE: 39             '9'
 opn_read LDAA    #$80                     ;F4AF: 86 80          '..'
 ZF4B1   BITA    opn_reg                  ;F4B1: B5 01 00       '...'
@@ -595,9 +595,9 @@ ZF4B9   BITA    opn_reg                  ;F4B9: B5 01 00       '...'
         BNE     ZF4B9                    ;F4BC: 26 FB          '&.'
         TIM     #$80,M0007               ;F4BE: 7B 80 07       '{..'
         BEQ     ZF4C7                    ;F4C1: 27 04          ''.'    bra if ml301
-        LDAA    opn_data_ml304           ;F4C3: B6 01 40       '..@'
+        LDAA    opn_data                 ;F4C3: B6 01 40       '..@'
         RTS                              ;F4C6: 39             '9'
-ZF4C7   LDAA    card_d_data              ;F4C7: B6 01 01       '...'
+ZF4C7   LDAA    ml304_card_d_data_ml301_opn_data ;F4C7: B6 01 01       '...'
         RTS                              ;F4CA: 39             '9'
 read_tune_data PSHX                             ;F4CB: 3C             '<'
         LDX     card_pointer             ;F4CC: DE A9          '..'

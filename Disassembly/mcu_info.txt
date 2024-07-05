@@ -62,12 +62,12 @@ label 00ba unk_M00BA
 label 00bc ml301_tune_rd_addr
 label 00be unk_M00BE
 label 0100 opn_reg
-label 0101 card_d_data
+label 0101 ml304_card_d_data_ml301_opn_data
 label 0102 card_c_data
 label 0103 card_b_data
 label 0104 card_a_data
 label 0105 card_addr
-label 0140 opn_data_ml304
+label 0140 opn_data
 *code
 label f000 scale_lut
 label f05a mainloop
@@ -125,8 +125,8 @@ lcomment 00b0 high byte of patch 1 loc???
 lcomment 00b6 really just a backup of PORT1
 lcomment 00b9 can use FF instead of FE to terminate tune?
 lcomment 00ba some temp var, holds a backup of X, -> 00BB
-lcomment 00bc temp, stored offset into builtin tune or something like that
 lcomment 00be temp, some offset on ml301
+lcomment 0101 actually opn data on ml301 (different memory map)
 lcomment 0105 16 bit wide, big endian, latched on hardware
 lcomment 0140 MCU A6 -> OPN A0 on hardware??? or something more complicated?
 *code

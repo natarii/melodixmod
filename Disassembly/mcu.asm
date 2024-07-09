@@ -263,12 +263,12 @@ ZF1AC   PSHX                             ;F1AC: 3C             '<'
         LDX     #MFFFF                   ;F1AD: CE FF FF       '...'
         STX     M0009                    ;F1B0: DF 09          '..'
         PULX                             ;F1B2: 38             '8'
-        OIM     #$04,M0008               ;F1B3: 72 04 08       'r..'
+        OIM     #$04,M0008               ;F1B3: 72 04 08       'r..'   enable TOI
         CLI                              ;F1B6: 0E             '.'
         LDAA    opn_io_a_val             ;F1B7: 96 AB          '..'
         LDAB    #$0E                     ;F1B9: C6 0E          '..'
         JSR     opn_write                ;F1BB: BD F4 90       '...'   io a
-        TIM     #$02,active_card_slot    ;F1BE: 7B 02 AC       '{..'   enable TOI
+        TIM     #$02,active_card_slot    ;F1BE: 7B 02 AC       '{..'
         BEQ     ZF1C6                    ;F1C1: 27 03          ''.'
         OIM     #$01,M0003               ;F1C3: 72 01 03       'r..'   mux select
 ZF1C6   TIM     #$01,active_card_slot    ;F1C6: 7B 01 AC       '{..'

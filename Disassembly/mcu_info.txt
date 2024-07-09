@@ -137,7 +137,7 @@ lcomment f03e probably all off 1111
 lcomment f042 io a
 lcomment f063 redundant, it is written before reading in swi isr
 lcomment f1a1 card presence detect
-lcomment f1be enable TOI
+lcomment f1b3 enable TOI
 lcomment f1bb io a
 lcomment f1c3 mux select
 lcomment f1cb mux select

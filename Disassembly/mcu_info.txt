@@ -17,6 +17,22 @@ data fd82-fea5 *ml301 westminster track data
 unused fea6-ffef
 
 *labels
+*mcu internal periphs
+label 0000 DDR1
+label 0001 DDR2
+label 0002 PORT1
+label 0003 PORT2
+label 0004 DDR3
+label 0005 DDR4
+label 0007 PORT4
+label 0008 TIMERCTL
+label 0009 TIMERCNTHI
+label 000a TIMERCNTLO
+label 000b TIMEROCRHI *not used
+label 000d INTCAPHI *not used
+label 000f PORT3CTL *not used
+label 0010 RATEMODECTL *not used
+label 0014 RAMCTL *not used
 *vars
 label 0080 track1_loc_word
 label 0082 track2_loc_word

@@ -5,6 +5,26 @@ file mcu.bin f000
 *regions
 data f000-f015 *scale lut
 hex f000-f015
+const f19a-f19b
+const f1ae-f1af
+const f210-f211
+const f23d-f23e
+const f259-f25a
+const f272-f273
+const f28b-f28c
+const f2a4-f2a5
+const f2bd-f2be
+const f2d6-f2d7
+const f382-f383
+const f398-f399
+const f3b0-f3b1
+const f3fe-f3ff
+const f8bd-f8be
+const f983-f984
+const f978-f979
+const f9f7-f9f8
+const fa1d-fa1e
+const fa4b-fa4c
 unused fbfb-fcff
 word fd00-fd03 *ml301 tune addrs
 data fd04-fd35 *ml301 tune patches
@@ -27,7 +47,7 @@ label 0005 DDR4
 label 0007 PORT4
 label 0008 TIMERCTL
 label 0009 TIMERCNTHI
-label 000a TIMERCNTLO
+label 000a TIMERCNTLO *not used
 label 000b TIMEROCRHI *not used
 label 000d INTCAPHI *not used
 label 000f PORT3CTL *not used
@@ -134,7 +154,7 @@ label fe46 ml301_westminster_trk3
 
 *comments
 *vars
-lcomment 000b-0014 not used
+lcomment 000a-0014 not used
 lcomment 0096-009f note: stored in order 1234 here!!!
 lcomment 00a2-00a5 note: stored in order 1234 here!!!
 lcomment 00b0 high byte of patch 1 loc???

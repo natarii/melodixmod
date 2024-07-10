@@ -13,14 +13,6 @@ DDR4    EQU     $0005
 PORT4   EQU     $0007
 TIMERCTL EQU     $0008
 TIMERCNTHI EQU     $0009
-TIMERCNTLO EQU     $000A
-TIMEROCRHI EQU     $000B                    ; not used
-INTCAPHI EQU     $000D                    ; not used
-PORT3CTL EQU     $000F                    ; not used
-RATEMODECTL EQU     $0010                    ; not used
-RAMCTL  EQU     $0014                    ; not used
-M0028   EQU     $0028
-M0064   EQU     $0064
 M007B   EQU     $007B
 track1_loc_word EQU     $0080
 track2_loc_word EQU     $0082
@@ -252,7 +244,7 @@ sel2_card_at_101 LDX     #ml304_card_d_data_ml301_opn_data ;F183: CE 01 01      
         JMP     ZF196                    ;F193: 7E F1 96       '~..'
 ZF196   CLRA                             ;F196: 4F             'O'
         STAA    currently_playing_bitfield ;F197: 97 B5          '..'
-        LDX     #DDR1                    ;F199: CE 00 00       '...'
+        LDX     #$0000                   ;F199: CE 00 00       '...'
         STX     card_addr                ;F19C: FF 01 05       '...'
         LDX     card_pointer             ;F19F: DE A9          '..'
         TIM     #$80,$00,X               ;F1A1: 6B 80 00       'k..'   card presence detect
@@ -260,7 +252,7 @@ ZF196   CLRA                             ;F196: 4F             'O'
         AIM     #$F7,PORT2               ;F1A6: 71 F7 03       'q..'
         JMP     mainloop                 ;F1A9: 7E F0 5A       '~.Z'
 ZF1AC   PSHX                             ;F1AC: 3C             '<'
-        LDX     #MFFFF                   ;F1AD: CE FF FF       '...'
+        LDX     #$FFFF                   ;F1AD: CE FF FF       '...'
         STX     TIMERCNTHI               ;F1B0: DF 09          '..'
         PULX                             ;F1B2: 38             '8'
         OIM     #$04,TIMERCTL            ;F1B3: 72 04 08       'r..'   enable TOI
@@ -302,7 +294,7 @@ ZF207   JSR     spin_delay_100ms         ;F207: BD F7 2A       '..*'
         DECA                             ;F20A: 4A             'J'
         BNE     ZF1FF                    ;F20B: 26 F2          '&.'
         BRA     ZF20F                    ;F20D: 20 00          ' .'
-ZF20F   LDX     #DDR2                    ;F20F: CE 00 01       '...'
+ZF20F   LDX     #$0001                   ;F20F: CE 00 01       '...'
         STX     card_addr                ;F212: FF 01 05       '...'
         JSR     read_tune_data           ;F215: BD F4 CB       '...'
         STAA    tune_end_delay           ;F218: 97 AD          '..'
@@ -322,7 +314,7 @@ ZF22F   CLRA                             ;F22F: 4F             'O'
         STAA    track1_kon_len           ;F236: 97 8F          '..'
         STAA    track2_kon_len           ;F238: 97 90          '..'
         STAA    track3_kon_len           ;F23A: 97 91          '..'
-        LDX     #TIMEROCRHI              ;F23C: CE 00 0B       '...'   track 1 loc
+        LDX     #$000B                   ;F23C: CE 00 0B       '...'   track 1 loc
         STX     card_addr                ;F23F: FF 01 05       '...'
         JSR     read_tune_data           ;F242: BD F4 CB       '...'
         TAB                              ;F245: 16             '.'
@@ -334,7 +326,7 @@ ZF22F   CLRA                             ;F22F: 4F             'O'
         JMP     ZF2EC                    ;F251: 7E F2 EC       '~..'
 ZF254   LDAA    #$00                     ;F254: 86 00          '..'
         STAA    opn_ch                   ;F256: 97 86          '..'
-        LDX     #DDR4                    ;F258: CE 00 05       '...'   patch 1 loc
+        LDX     #$0005                   ;F258: CE 00 05       '...'   patch 1 loc
         STX     card_addr                ;F25B: FF 01 05       '...'
         JSR     read_tune_data           ;F25E: BD F4 CB       '...'
         TAB                              ;F261: 16             '.'
@@ -345,7 +337,7 @@ ZF254   LDAA    #$00                     ;F254: 86 00          '..'
         JSR     ZF4D2                    ;F26B: BD F4 D2       '...'
         CLRA                             ;F26E: 4F             'O'
         STAA    track1_is_finished       ;F26F: 97 87          '..'
-ZF271   LDX     #INTCAPHI                ;F271: CE 00 0D       '...'   track 2 loc
+ZF271   LDX     #$000D                   ;F271: CE 00 0D       '...'   track 2 loc
         STX     card_addr                ;F274: FF 01 05       '...'
         JSR     read_tune_data           ;F277: BD F4 CB       '...'
         TAB                              ;F27A: 16             '.'
@@ -356,7 +348,7 @@ ZF271   LDX     #INTCAPHI                ;F271: CE 00 0D       '...'   track 2 l
         BEQ     ZF2F3                    ;F284: 27 6D          ''m'
         LDAA    #$01                     ;F286: 86 01          '..'
         STAA    opn_ch                   ;F288: 97 86          '..'
-        LDX     #PORT4                   ;F28A: CE 00 07       '...'   patch 2 loc
+        LDX     #$0007                   ;F28A: CE 00 07       '...'   patch 2 loc
         STX     card_addr                ;F28D: FF 01 05       '...'
         JSR     read_tune_data           ;F290: BD F4 CB       '...'
         TAB                              ;F293: 16             '.'
@@ -367,7 +359,7 @@ ZF271   LDX     #INTCAPHI                ;F271: CE 00 0D       '...'   track 2 l
         JSR     ZF4D2                    ;F29D: BD F4 D2       '...'
         CLRA                             ;F2A0: 4F             'O'
         STAA    track2_is_finished       ;F2A1: 97 88          '..'
-ZF2A3   LDX     #PORT3CTL                ;F2A3: CE 00 0F       '...'   track 3 loc
+ZF2A3   LDX     #$000F                   ;F2A3: CE 00 0F       '...'   track 3 loc
         STX     card_addr                ;F2A6: FF 01 05       '...'
         JSR     read_tune_data           ;F2A9: BD F4 CB       '...'
         TAB                              ;F2AC: 16             '.'
@@ -378,7 +370,7 @@ ZF2A3   LDX     #PORT3CTL                ;F2A3: CE 00 0F       '...'   track 3 l
         BEQ     ZF2FA                    ;F2B6: 27 42          ''B'
         LDAA    #$02                     ;F2B8: 86 02          '..'
         STAA    opn_ch                   ;F2BA: 97 86          '..'
-        LDX     #TIMERCNTHI              ;F2BC: CE 00 09       '...'   patch 3 loc
+        LDX     #$0009                   ;F2BC: CE 00 09       '...'   patch 3 loc
         STX     card_addr                ;F2BF: FF 01 05       '...'
         JSR     read_tune_data           ;F2C2: BD F4 CB       '...'
         TAB                              ;F2C5: 16             '.'
@@ -389,7 +381,7 @@ ZF2A3   LDX     #PORT3CTL                ;F2A3: CE 00 0F       '...'   track 3 l
         JSR     ZF4D2                    ;F2CF: BD F4 D2       '...'
         CLRA                             ;F2D2: 4F             'O'
         STAA    track3_is_finished       ;F2D3: 97 89          '..'
-ZF2D5   LDX     #RATEMODECTL             ;F2D5: CE 00 10       '...'   timer B val
+ZF2D5   LDX     #$0010                   ;F2D5: CE 00 10       '...'   timer B val
         STX     card_addr                ;F2D8: FF 01 05       '...'
         JSR     read_tune_data           ;F2DB: BD F4 CB       '...'
         STAA    opn_timer_b              ;F2DE: 97 8A          '..'
@@ -465,7 +457,7 @@ ZF368   LDAA    track1_is_finished       ;F368: 96 87          '..'
         LDAA    M00B0                    ;F37B: 96 B0          '..'
         BEQ     ZF397                    ;F37D: 27 18          ''.'
         STAA    M00AF                    ;F37F: 97 AF          '..'
-ZF381   LDX     #TIMERCNTLO              ;F381: CE 00 0A       '...'
+ZF381   LDX     #$000A                   ;F381: CE 00 0A       '...'
 ZF384   TIM     #$01,already_playing     ;F384: 7B 01 B4       '{..'
         BEQ     ZF38C                    ;F387: 27 03          ''.'
         JMP     ZF3E3                    ;F389: 7E F3 E3       '~..'
@@ -474,7 +466,7 @@ ZF38C   JSR     spin_delay_100ms         ;F38C: BD F7 2A       '..*'
         BNE     ZF384                    ;F390: 26 F2          '&.'
         DEC     >M00AF                   ;F392: 7A 00 AF       'z..'
         BNE     ZF381                    ;F395: 26 EA          '&.'
-ZF397   LDX     #DDR1                    ;F397: CE 00 00       '...'
+ZF397   LDX     #$0000                   ;F397: CE 00 00       '...'
         STX     card_addr                ;F39A: FF 01 05       '...'
         LDX     card_pointer             ;F39D: DE A9          '..'
         TIM     #$01,$00,X               ;F39F: 6B 01 00       'k..'
@@ -484,7 +476,7 @@ ZF397   LDX     #DDR1                    ;F397: CE 00 00       '...'
         LDAA    tune_end_delay_lo        ;F3A9: 96 AE          '..'
         BEQ     ZF3C5                    ;F3AB: 27 18          ''.'
         STAA    M00AF                    ;F3AD: 97 AF          '..'
-ZF3AF   LDX     #TIMERCNTLO              ;F3AF: CE 00 0A       '...'
+ZF3AF   LDX     #$000A                   ;F3AF: CE 00 0A       '...'
 ZF3B2   TIM     #$01,already_playing     ;F3B2: 7B 01 B4       '{..'
         BEQ     ZF3BA                    ;F3B5: 27 03          ''.'
         JMP     ZF3E3                    ;F3B7: 7E F3 E3       '~..'
@@ -515,7 +507,7 @@ ZF3E3   LDAA    #$00                     ;F3E3: 86 00          '..'
         LDAA    #$28                     ;F3F6: 86 28          '.('
         LDAB    #$27                     ;F3F8: C6 27          '.''
         JSR     opn_write                ;F3FA: BD F4 90       '...'   write timer A/B control and 3ch mode
-        LDX     #DDR4                    ;F3FD: CE 00 05       '...'
+        LDX     #$0005                   ;F3FD: CE 00 05       '...'
 ZF400   JSR     spin_delay_100ms         ;F400: BD F7 2A       '..*'
         DEX                              ;F403: 09             '.'
         BNE     ZF400                    ;F404: 26 FA          '&.'
@@ -1075,7 +1067,7 @@ ZF8A2   JSR     spin_delay_100ms         ;F8A2: BD F7 2A       '..*'
         JSR     opn_write                ;F8B4: BD F4 90       '...'   io a
         LDX     ml301_4notechime_addr    ;F8B7: FE FD 00       '...'
         STX     ml301_tune_rd_addr       ;F8BA: DF BC          '..'
-ml301_setup_tune LDX     #MFFFF                   ;F8BC: CE FF FF       '...'
+ml301_setup_tune LDX     #$FFFF                   ;F8BC: CE FF FF       '...'
         STX     TIMERCNTHI               ;F8BF: DF 09          '..'
         OIM     #$04,TIMERCTL            ;F8C1: 72 04 08       'r..'   enable TOI
         CLI                              ;F8C4: 0E             '.'
@@ -1160,12 +1152,12 @@ ZF96C   JSR     spin_delay_100ms         ;F96C: BD F7 2A       '..*'
         TIM     #$80,PORT1               ;F96F: 7B 80 02       '{..'
         BEQ     ZF95C                    ;F972: 27 E8          ''.'
         JMP     ZF937                    ;F974: 7E F9 37       '~.7'
-ZF977   LDX     #RAMCTL                  ;F977: CE 00 14       '...'   2 sec delay
+ZF977   LDX     #$0014                   ;F977: CE 00 14       '...'   2 sec delay
 ZF97A   JSR     spin_delay_100ms         ;F97A: BD F7 2A       '..*'
         DEX                              ;F97D: 09             '.'
         BNE     ZF97A                    ;F97E: 26 FA          '&.'
         BRA     ZF954                    ;F980: 20 D2          ' .'
-ZF982   LDX     #M0028                   ;F982: CE 00 28       '..('   4 sec delay
+ZF982   LDX     #$0028                   ;F982: CE 00 28       '..('   4 sec delay
 ZF985   JSR     spin_delay_100ms         ;F985: BD F7 2A       '..*'
         DEX                              ;F988: 09             '.'
         BNE     ZF985                    ;F989: 26 FA          '&.'
@@ -1218,7 +1210,7 @@ ZF9DF   LDAA    track1_is_finished       ;F9DF: 96 87          '..'
         JSR     opn_write                ;F9EF: BD F4 90       '...'   timer ab ctl 3ch mode
         LDAA    unk_M00BE                ;F9F2: 96 BE          '..'
         BNE     ZFA1C                    ;F9F4: 26 26          '&&'
-        LDX     #M0064                   ;F9F6: CE 00 64       '..d'
+        LDX     #$0064                   ;F9F6: CE 00 64       '..d'
 ZF9F9   JSR     spin_delay_100ms         ;F9F9: BD F7 2A       '..*'
         DEX                              ;F9FC: 09             '.'
         BNE     ZF9F9                    ;F9FD: 26 FA          '&.'
@@ -1233,7 +1225,7 @@ ZFA0C   AIM     #$EF,PORT1               ;FA0C: 71 EF 02       'q..'
         JSR     opn_write                ;FA13: BD F4 90       '...'   io a
         AIM     #$FB,TIMERCTL            ;FA16: 71 FB 08       'q..'   disable TOI
         JMP     ml301_clear              ;FA19: 7E F8 69       '~.i'
-ZFA1C   LDX     #TIMERCNTLO              ;FA1C: CE 00 0A       '...'
+ZFA1C   LDX     #$000A                   ;FA1C: CE 00 0A       '...'
 ZFA1F   TIM     #$01,already_playing     ;FA1F: 7B 01 B4       '{..'
         BEQ     ZFA27                    ;FA22: 27 03          ''.'
         JMP     ZFA30                    ;FA24: 7E FA 30       '~.0'
@@ -1251,7 +1243,7 @@ ZFA30   LDAA    #$00                     ;FA30: 86 00          '..'
         LDAA    #$28                     ;FA43: 86 28          '.('
         LDAB    #$27                     ;FA45: C6 27          '.''
         JSR     opn_write                ;FA47: BD F4 90       '...'   timer ab ctl 3ch mode
-        LDX     #DDR4                    ;FA4A: CE 00 05       '...'
+        LDX     #$0005                   ;FA4A: CE 00 05       '...'
 ZFA4D   JSR     spin_delay_100ms         ;FA4D: BD F7 2A       '..*'
         DEX                              ;FA50: 09             '.'
         BNE     ZFA4D                    ;FA51: 26 FA          '&.'

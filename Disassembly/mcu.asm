@@ -45,10 +45,10 @@ opn_tl_modifier EQU     $00A8
 card_pointer EQU     $00A9
 opn_io_a_val EQU     $00AB
 active_card_slot EQU     $00AC
-tune_end_delay EQU     $00AD
-tune_end_delay_lo EQU     $00AE
-M00AF   EQU     $00AF
-M00B0   EQU     $00B0                    ; high byte of patch 1 loc???
+tune_repeat_count EQU     $00AD
+tune_repeat_delay EQU     $00AE
+tune_end_repeat_counter EQU     $00AF
+tune_end_delay EQU     $00B0
 patch_loc_word EQU     $00B1
 int_flag EQU     $00B3
 already_playing EQU     $00B4
@@ -297,15 +297,15 @@ ZF207   JSR     spin_delay_100ms         ;F207: BD F7 2A       '..*'
 ZF20F   LDX     #$0001                   ;F20F: CE 00 01       '...'
         STX     card_addr                ;F212: FF 01 05       '...'
         JSR     read_tune_data           ;F215: BD F4 CB       '...'
-        STAA    tune_end_delay           ;F218: 97 AD          '..'
+        STAA    tune_repeat_count        ;F218: 97 AD          '..'
         INX                              ;F21A: 08             '.'
         STX     card_addr                ;F21B: FF 01 05       '...'
         JSR     read_tune_data           ;F21E: BD F4 CB       '...'
-        STAA    tune_end_delay_lo        ;F221: 97 AE          '..'
+        STAA    tune_repeat_delay        ;F221: 97 AE          '..'
         INX                              ;F223: 08             '.'
         STX     card_addr                ;F224: FF 01 05       '...'
         JSR     read_tune_data           ;F227: BD F4 CB       '...'
-        STAA    M00B0                    ;F22A: 97 B0          '..'
+        STAA    tune_end_delay           ;F22A: 97 B0          '..'
         JMP     ZF22F                    ;F22C: 7E F2 2F       '~./'
 ZF22F   CLRA                             ;F22F: 4F             'O'
         STAA    track1_note_len          ;F230: 97 8C          '..'
@@ -454,9 +454,9 @@ ZF368   LDAA    track1_is_finished       ;F368: 96 87          '..'
         LDAA    #$28                     ;F374: 86 28          '.('
         LDAB    #$27                     ;F376: C6 27          '.''
         JSR     opn_write                ;F378: BD F4 90       '...'   clear timer b flag, stop timer b
-        LDAA    M00B0                    ;F37B: 96 B0          '..'
+        LDAA    tune_end_delay           ;F37B: 96 B0          '..'
         BEQ     ZF397                    ;F37D: 27 18          ''.'
-        STAA    M00AF                    ;F37F: 97 AF          '..'
+        STAA    tune_end_repeat_counter  ;F37F: 97 AF          '..'
 ZF381   LDX     #$000A                   ;F381: CE 00 0A       '...'
 ZF384   TIM     #$01,already_playing     ;F384: 7B 01 B4       '{..'
         BEQ     ZF38C                    ;F387: 27 03          ''.'
@@ -464,18 +464,18 @@ ZF384   TIM     #$01,already_playing     ;F384: 7B 01 B4       '{..'
 ZF38C   JSR     spin_delay_100ms         ;F38C: BD F7 2A       '..*'
         DEX                              ;F38F: 09             '.'
         BNE     ZF384                    ;F390: 26 F2          '&.'
-        DEC     >M00AF                   ;F392: 7A 00 AF       'z..'
+        DEC     >tune_end_repeat_counter ;F392: 7A 00 AF       'z..'
         BNE     ZF381                    ;F395: 26 EA          '&.'
 ZF397   LDX     #$0000                   ;F397: CE 00 00       '...'
         STX     card_addr                ;F39A: FF 01 05       '...'
         LDX     card_pointer             ;F39D: DE A9          '..'
         TIM     #$01,$00,X               ;F39F: 6B 01 00       'k..'
         BNE     ZF3C8                    ;F3A2: 26 24          '&$'
-        DEC     >tune_end_delay          ;F3A4: 7A 00 AD       'z..'
+        DEC     >tune_repeat_count       ;F3A4: 7A 00 AD       'z..'
         BEQ     ZF3C8                    ;F3A7: 27 1F          ''.'
-        LDAA    tune_end_delay_lo        ;F3A9: 96 AE          '..'
+        LDAA    tune_repeat_delay        ;F3A9: 96 AE          '..'
         BEQ     ZF3C5                    ;F3AB: 27 18          ''.'
-        STAA    M00AF                    ;F3AD: 97 AF          '..'
+        STAA    tune_end_repeat_counter  ;F3AD: 97 AF          '..'
 ZF3AF   LDX     #$000A                   ;F3AF: CE 00 0A       '...'
 ZF3B2   TIM     #$01,already_playing     ;F3B2: 7B 01 B4       '{..'
         BEQ     ZF3BA                    ;F3B5: 27 03          ''.'
@@ -483,7 +483,7 @@ ZF3B2   TIM     #$01,already_playing     ;F3B2: 7B 01 B4       '{..'
 ZF3BA   JSR     spin_delay_100ms         ;F3BA: BD F7 2A       '..*'
         DEX                              ;F3BD: 09             '.'
         BNE     ZF3B2                    ;F3BE: 26 F2          '&.'
-        DEC     >M00AF                   ;F3C0: 7A 00 AF       'z..'
+        DEC     >tune_end_repeat_counter ;F3C0: 7A 00 AF       'z..'
         BNE     ZF3AF                    ;F3C3: 26 EA          '&.'
 ZF3C5   JMP     ZF22F                    ;F3C5: 7E F2 2F       '~./'
 ZF3C8   LDAA    PORT1                    ;F3C8: 96 02          '..'

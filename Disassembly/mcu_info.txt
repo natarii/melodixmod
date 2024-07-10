@@ -84,8 +84,10 @@ label 00a8 opn_tl_modifier
 label 00a9 card_pointer
 label 00ab opn_io_a_val
 label 00ac active_card_slot
-label 00ad tune_end_delay
-label 00ae tune_end_delay_lo
+label 00ad tune_repeat_count
+label 00ae tune_repeat_delay
+label 00af tune_end_repeat_counter
+label 00b0 tune_end_delay
 label 00b1 patch_loc_word
 label 00b3 int_flag
 label 00b4 already_playing
@@ -157,7 +159,6 @@ label fe46 ml301_westminster_trk3
 lcomment 000a-0014 not used
 lcomment 0096-009f note: stored in order 1234 here!!!
 lcomment 00a2-00a5 note: stored in order 1234 here!!!
-lcomment 00b0 high byte of patch 1 loc???
 lcomment 00b6 really just a backup of PORT1
 lcomment 00b9 can use FF instead of FE to terminate tune?
 lcomment 00ba some temp var, holds a backup of X, -> 00BB

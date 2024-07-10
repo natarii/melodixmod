@@ -1,8 +1,9 @@
 Card header
   Offset Type       Data
   $0000  uint8      Card presence detect / options
-  $0001  uint8      Unknown
-  $0002  uint16be   Post-playback delay in ticks
+  $0001  uint8      Repeat count (1 = play one time)
+  $0002  uint8      Repeat delay (in ticks)
+  $0003  uint8      Post-playback delay (in ticks)
   $0004  uint16be   Patch 1 address *
   $0006  uint16be   Patch 2 address *
   $0008  uint16be   Patch 3 address *
@@ -49,4 +50,5 @@ Card presence detect / options
   A typical value is 0x7f.
   Bit 7 = Card detect. Must be 0
   Bit 1 = Enables start delay and remote relay. Set to 1 on most cards, except special cards like MC-S01, etc.
+  Bit 0 = Only play card once, ignoring repeat count. If 0, then the repeat count from the header will be used.
   All other bits are unknown or unused.

@@ -137,6 +137,9 @@ label f7c9 isr_swi3_nothing_pressed
 label f830 ml301_mode
 label f869 ml301_clear
 label f8bc ml301_setup_tune
+label f954 ml301_setup_westminster
+label f977 ml301_setup_westminster_2s_delay
+label f982 ml301_setup_westminster_4s_delay
 label fb2e ml301_setup_next_note_trk1
 label fb5d ml301_setup_next_note_trk2
 label fb8c ml301_setup_next_note_trk3
@@ -243,9 +246,8 @@ lcomment f8b4 io a
 lcomment f8c1 enable TOI
 lcomment f941 io a
 lcomment f947 io b
-lcomment f977 2 sec delay
-lcomment f982 4 sec delay
 lcomment f9ef timer ab ctl 3ch mode
+lcomment f9f6 post-westminster delay
 lcomment fa13 io a
 lcomment fa16 disable TOI
 lcomment fa47 timer ab ctl 3ch mode

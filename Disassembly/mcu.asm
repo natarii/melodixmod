@@ -59,7 +59,7 @@ nothing_pressed_in_isr EQU     $00B8
 tune_found_ff_flag EQU     $00B9                    ; can use FF instead of FE to terminate tune?
 unk_M00BA EQU     $00BA                    ; some temp var, holds a backup of X, -> 00BB
 ml301_tune_rd_addr EQU     $00BC
-unk_M00BE EQU     $00BE                    ; temp, some offset on ml301
+ml301_is_4note EQU     $00BE
 M00BF   EQU     $00BF
 M00C0   EQU     $00C0
 M00C1   EQU     $00C1
@@ -1039,7 +1039,7 @@ ml301_clear CLRA                             ;F869: 4F             'O'
         STAA    track1_kon_len           ;F870: 97 8F          '..'
         STAA    track2_kon_len           ;F872: 97 90          '..'
         STAA    track3_kon_len           ;F874: 97 91          '..'
-        STAA    unk_M00BE                ;F876: 97 BE          '..'
+        STAA    ml301_is_4note           ;F876: 97 BE          '..'
         STAA    M00C1                    ;F878: 97 C1          '..'
         STAA    M00BF                    ;F87A: 97 BF          '..'
         STAA    M00C0                    ;F87C: 97 C0          '..'
@@ -1060,7 +1060,7 @@ ZF89A   TIM     #$01,PORT1               ;F89A: 7B 01 02       '{..'
 ZF8A2   JSR     spin_delay_100ms         ;F8A2: BD F7 2A       '..*'
         TIM     #$01,PORT1               ;F8A5: 7B 01 02       '{..'
         BNE     ml301_clear              ;F8A8: 26 BF          '&.'
-        INC     >unk_M00BE               ;F8AA: 7C 00 BE       '|..'
+        INC     >ml301_is_4note          ;F8AA: 7C 00 BE       '|..'
         OIM     #$10,PORT1               ;F8AD: 72 10 02       'r..'
         LDAA    #$01                     ;F8B0: 86 01          '..'
         LDAB    #$0E                     ;F8B2: C6 0E          '..'
@@ -1208,7 +1208,7 @@ ZF9DF   LDAA    track1_is_finished       ;F9DF: 96 87          '..'
         LDAA    #$28                     ;F9EB: 86 28          '.('
         LDAB    #$27                     ;F9ED: C6 27          '.''
         JSR     opn_write                ;F9EF: BD F4 90       '...'   timer ab ctl 3ch mode
-        LDAA    unk_M00BE                ;F9F2: 96 BE          '..'
+        LDAA    ml301_is_4note           ;F9F2: 96 BE          '..'
         BNE     ZFA1C                    ;F9F4: 26 26          '&&'
         LDX     #$0064                   ;F9F6: CE 00 64       '..d'   post-westminster delay
 ZF9F9   JSR     spin_delay_100ms         ;F9F9: BD F7 2A       '..*'
@@ -1258,7 +1258,7 @@ ZFA4D   JSR     spin_delay_100ms         ;FA4D: BD F7 2A       '..*'
         STAA    track1_kon_len           ;FA64: 97 8F          '..'
         STAA    track2_kon_len           ;FA66: 97 90          '..'
         STAA    track3_kon_len           ;FA68: 97 91          '..'
-        STAA    unk_M00BE                ;FA6A: 97 BE          '..'
+        STAA    ml301_is_4note           ;FA6A: 97 BE          '..'
         STAA    M00C1                    ;FA6C: 97 C1          '..'
         STAA    M00BF                    ;FA6E: 97 BF          '..'
         STAA    M00C0                    ;FA70: 97 C0          '..'
@@ -1316,7 +1316,7 @@ ZFA82   LDAA    ,X                       ;FA82: A6 00          '..'
         JSR     add_opn_ch_x             ;FADF: BD F7 1D       '...'
         STAA    ,X                       ;FAE2: A7 00          '..'
         RTS                              ;FAE4: 39             '9'
-ZFAE5   LDAA    unk_M00BE                ;FAE5: 96 BE          '..'
+ZFAE5   LDAA    ml301_is_4note           ;FAE5: 96 BE          '..'
         BNE     ZFB26                    ;FAE7: 26 3D          '&='
         LDAA    #$FF                     ;FAE9: 86 FF          '..'
         LDAB    opn_timer_b              ;FAEB: D6 8A          '..'

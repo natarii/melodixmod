@@ -98,7 +98,7 @@ label 00b8 nothing_pressed_in_isr
 label 00b9 tune_found_ff_flag
 label 00ba unk_M00BA
 label 00bc ml301_tune_rd_addr
-label 00be unk_M00BE
+label 00be ml301_is_4note
 label 0100 opn_reg
 label 0101 ml304_card_d_data_ml301_opn_data
 label 0102 card_c_data
@@ -165,7 +165,6 @@ lcomment 00a2-00a5 note: stored in order 1234 here!!!
 lcomment 00b6 really just a backup of PORT1
 lcomment 00b9 can use FF instead of FE to terminate tune?
 lcomment 00ba some temp var, holds a backup of X, -> 00BB
-lcomment 00be temp, some offset on ml301
 lcomment 0101 actually opn data on ml301 (different memory map)
 lcomment 0105 16 bit wide, big endian, latched on hardware
 lcomment 0140 MCU A6 -> OPN A0 on hardware
